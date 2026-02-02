@@ -22,4 +22,8 @@ npm install
   },
 }
 ```
+- Follow this by doing
+```bash
+npm update
+```
 #### 5. Delete/change me
