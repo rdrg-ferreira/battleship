@@ -3,12 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
+  "jest": {
+    "transform": {}
+  },
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack serve --mode development",
     "deploy": "npm run build && gh-pages -d dist",
-    "test": "jest",
-    "watch": "jest --watch *.js"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch *.js"
   },
   "repository": {
     "type": "git",

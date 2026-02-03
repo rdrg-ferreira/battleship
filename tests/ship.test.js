@@ -1,4 +1,4 @@
-const Ship = require("../src/modules/ship");
+import { Ship } from '../src/modules/ship';
 
 test("hit count increaments correctly", () => {
     const s = new Ship(3);

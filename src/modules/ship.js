@@ -1,4 +1,4 @@
-class Ship {
+export class Ship {
     constructor(length) {
         this.length = length;
         this.hitCount = 0;
@@ -14,5 +14,3 @@ class Ship {
         this.hasSunk = this.length === this.hitCount;
     }
 }
-
-module.exports = Ship;
