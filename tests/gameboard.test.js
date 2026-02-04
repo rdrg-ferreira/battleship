@@ -54,4 +54,28 @@ describe("receiveAttack function", () => {
         g.receiveAttack(x, y);
         expect(s.hitCount).toBe(1);
     });
-})
+});
+
+describe("haveAllShipsSunk function", () => {
+    beforeEach(() => {
+        s1 = new Ship(1);
+        s2 = new Ship(1);
+        g.placeShip(s1, 3, 2, "up");
+        g.placeShip(s2, 6, 3, "right");
+    });
+
+    test("function works correctly if not all ships have sunk", () => {
+        expect(g.haveAllShipsSunk()).toBeFalsy();
+
+        g.receiveAttack(3, 2);
+        expect(g.haveAllShipsSunk()).toBeFalsy();
+    });
+
+    test("function works correctly if all ships have sunk", () => {
+        expect(g.haveAllShipsSunk()).toBeFalsy();
+
+        g.receiveAttack(3, 2);
+        g.receiveAttack(6, 3);
+        expect(g.haveAllShipsSunk()).toBeTruthy();
+    });
+});

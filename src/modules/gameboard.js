@@ -13,7 +13,9 @@ export class Gameboard {
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        ]
+        ];
+
+        this.ships = [];
     }
 
     placeShip(ship, x, y, orientation) {
@@ -32,6 +34,7 @@ export class Gameboard {
             else if (orientation === "left") yCopy--;
         }
 
+        this.ships.push(ship);
         return true;
     }
 
@@ -55,5 +58,9 @@ export class Gameboard {
         
         this.grid[x][y] = 1;
         return true;
+    }
+
+    haveAllShipsSunk() {
+        return this.ships.every(ship => ship.hasSunk);
     }
 }
