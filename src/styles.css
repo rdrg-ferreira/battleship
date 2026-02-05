@@ -1,0 +1,87 @@
+:root {
+    --background-color: rgb(231, 230, 230);
+    --square-water-color: rgb(135, 171, 219);
+    --square-ship-color: rgb(24, 19, 19);
+    --square-unknown-color: rgb(91, 91, 112);
+    --shot-color: rgb(165, 53, 53);
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body, html {
+    height: 100%;
+}
+
+body {
+    background-color: var(--background-color);
+    min-width: fit-content;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.grid {
+    display: grid;
+}
+
+header {
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 60px 0;
+}
+
+#action-display {
+    width: 100%;
+    height: 1.2rem;
+    text-align: center;
+}
+
+main {
+    padding: 60px 160px 40px;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+main > * {
+    flex-grow: 1;
+}
+
+.field {
+    align-items: center;
+    gap: 20px;
+}
+
+.field > .title {
+    font-weight: bold;
+}
+
+.board {
+    min-height: 400px;
+    min-width: 400px;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    gap: 4px;
+}
+
+.square {
+    border-radius: 8px;
+    background-color: var(--square-water-color);
+}
+
+.square.unknown {
+    background-color: var(--square-unknown-color);
+}
+
+.square.ship {
+    background-color: var(--square-ship-color);
+}
