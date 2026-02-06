@@ -38,7 +38,21 @@ body {
 header {
     text-align: center;
     font-size: 1.5rem;
-    padding: 60px 0;
+    padding: 60px 0 30px;
+}
+
+.actions {
+    justify-content: center;
+}
+
+button {
+    padding: 8px 16px;
+    border-radius: 10px;
+    border: 2px solid black;
+}
+
+button:hover {
+    filter: brightness(0.9);
 }
 
 main {

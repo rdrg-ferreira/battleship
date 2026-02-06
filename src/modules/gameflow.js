@@ -2,17 +2,18 @@ import { Player } from "./player.js";
 import { Ship } from "./ship.js";
 import { buildGameboards } from "./ui.js";
 
+let players, currentPlayer;
+function getCurrentPlayer() {return currentPlayer;}
+function changeCurrentPlayer() {
+    currentPlayer = currentPlayer === players[0] ? players[1] : players[0];
+    if (currentPlayer.type === "robot") playComputerTurn(players[0]);
+}
+
 export function initGame() {
-    const players = createPlayers();
+    players = createPlayers();
+    currentPlayer = players[0];
     placeTestShips(players[0], players[1]);
     buildGameboards(players[0], players[1]);
-
-    let currentPlayer = players[0];
-    function getCurrentPlayer() {return currentPlayer;}
-    function changeCurrentPlayer() {
-        currentPlayer = currentPlayer === players[0] ? players[1] : players[0];
-        if (currentPlayer.type === "robot") playComputerTurn(players[0]);
-    }
 
     toggleBoard(players[0], getCurrentPlayer, changeCurrentPlayer);
     toggleBoard(players[1], getCurrentPlayer, changeCurrentPlayer);
@@ -34,23 +35,25 @@ function placeTestShips(p1, p2) {
     }
 }
 
-function toggleBoard(player, getCurrentPlayer, changeCurrentPlayer) {
+function handleShot(e, player) {
+    if (getCurrentPlayer() === player || !e.target.classList.contains("square")) return;
+
+    const square = e.target;
+    const [previousState, success] = player.board.receiveAttack(square.dataset.x, square.dataset.y);
+
+    if (!success) return;
+
+    if (previousState instanceof Ship) square.classList.add("ship");
+    square.classList.add("shot");
+    square.classList.remove("unknown");
+
+    changeCurrentPlayer();
+}
+
+function toggleBoard(player) {
     const board = document.querySelector(`#${player.name}-board > .board`);
 
-    board.addEventListener("click", (e) => {
-        if (getCurrentPlayer() === player || !e.target.classList.contains("square")) return;
-
-        const square = e.target;
-        const [previousState, success] = player.board.receiveAttack(square.dataset.x, square.dataset.y);
-
-        if (!success) return;
-
-        if (previousState instanceof Ship) square.classList.add("ship");
-        square.classList.add("shot");
-        square.classList.remove("unknown");
-
-        changeCurrentPlayer();
-    });
+    board.addEventListener("click", (e) => handleShot(e, player));
 }
 
 function playComputerTurn(enemy) {
@@ -63,3 +66,13 @@ function playComputerTurn(enemy) {
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
+
+document.querySelector("#reset").addEventListener("click", (e) => {
+    e.stopPropagation();
+    const boards = document.querySelectorAll(".board");
+    boards.forEach(b => {
+        const newB = b.cloneNode(false);
+        b.parentNode.replaceChild(newB, b);
+    });
+    initGame();
+});
