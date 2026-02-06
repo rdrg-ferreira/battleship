@@ -52,7 +52,7 @@ export class Gameboard {
     }
 
     receiveAttack(x, y) {
-        if (x < 0 || y < 0 || this.grid[x][y] === 1) return false;
+        if (x < 0 || y < 0 || this.grid[x][y] === 1) return [null, false];
 
         if (this.grid[x][y] instanceof Ship) this.grid[x][y].hit();
         

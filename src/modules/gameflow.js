@@ -41,7 +41,9 @@ function toggleBoard(player, getCurrentPlayer, changeCurrentPlayer) {
         if (getCurrentPlayer() === player) return;
 
         const square = e.target;
-        const previousState = player.board.receiveAttack(square.dataset.x, square.dataset.y)[0];
+        const [previousState, success] = player.board.receiveAttack(square.dataset.x, square.dataset.y);
+
+        if (!success) return;
 
         if (previousState instanceof Ship) square.classList.add("ship");
         square.classList.add("shot");
@@ -52,5 +54,5 @@ function toggleBoard(player, getCurrentPlayer, changeCurrentPlayer) {
 }
 
 function playComputerTurn() {
-    
+
 }
