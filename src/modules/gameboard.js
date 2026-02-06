@@ -56,8 +56,9 @@ export class Gameboard {
 
         if (this.grid[x][y] instanceof Ship) this.grid[x][y].hit();
         
+        const previousState = this.grid[x][y];
         this.grid[x][y] = 1;
-        return true;
+        return [previousState, true];
     }
 
     haveAllShipsSunk() {
