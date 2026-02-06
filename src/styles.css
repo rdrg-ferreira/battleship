@@ -3,7 +3,8 @@
     --square-water-color: rgb(135, 171, 219);
     --square-ship-color: rgb(24, 19, 19);
     --square-unknown-color: rgb(91, 91, 112);
-    --shot-color: rgb(165, 53, 53);
+    --square-shot-ship-color: rgb(165, 53, 53);
+    --square-shot-none-color: rgb(226, 226, 157);
 }
 
 * {
@@ -78,4 +79,12 @@ main > * {
 
 .square.ship {
     background-color: var(--square-ship-color);
+}
+
+.square.shot.ship {
+    background-color: var(--square-shot-ship-color);
+}
+
+.square.shot {
+    background-color: var(--square-shot-none-color);
 }

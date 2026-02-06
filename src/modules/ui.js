@@ -1,8 +1,8 @@
 import { Ship } from "./ship.js";
 
-export function buildGameboards(player, enemy) {
-    function buildGrid(player, enemy) {
-        const boardElement = document.querySelector(`#${player.name}-board > .board`);
+export function buildGameboards(p1, p2) {
+    function buildGrid(player) {
+        const board = document.querySelector(`#${player.name}-board > .board`);
 
         for (let i = 0; i < 10; i++) {
             for (let j = 0; j < 10; j++) {
@@ -15,11 +15,11 @@ export function buildGameboards(player, enemy) {
 
                 square.dataset.x = i;
                 square.dataset.y = j;
-                boardElement.appendChild(square);
+                board.appendChild(square);
             }
         }
     }
 
-    buildGrid(player, enemy);
-    buildGrid(enemy, player);
+    buildGrid(p1);
+    buildGrid(p2);
 }
