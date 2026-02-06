@@ -11,7 +11,7 @@ export function initGame() {
     function getCurrentPlayer() {return currentPlayer;}
     function changeCurrentPlayer() {
         currentPlayer = currentPlayer === players[0] ? players[1] : players[0];
-        if (currentPlayer.type === "robot") playComputerTurn();
+        if (currentPlayer.type === "robot") playComputerTurn(players[0]);
     }
 
     toggleBoard(players[0], getCurrentPlayer, changeCurrentPlayer);
@@ -38,7 +38,7 @@ function toggleBoard(player, getCurrentPlayer, changeCurrentPlayer) {
     const board = document.querySelector(`#${player.name}-board > .board`);
 
     board.addEventListener("click", (e) => {
-        if (getCurrentPlayer() === player) return;
+        if (getCurrentPlayer() === player || !e.target.classList.contains("square")) return;
 
         const square = e.target;
         const [previousState, success] = player.board.receiveAttack(square.dataset.x, square.dataset.y);
@@ -53,6 +53,13 @@ function toggleBoard(player, getCurrentPlayer, changeCurrentPlayer) {
     });
 }
 
-function playComputerTurn() {
+function playComputerTurn(enemy) {
+    let x = getRandomInt(10), y = getRandomInt(10);
+    while (enemy.board.grid[x][y] === 1) x = getRandomInt(10), y = getRandomInt(10);
+    const square = document.querySelector(`#${enemy.name}-board .square[data-x="${x}"][data-y="${y}"]`);
+    square.click();
+}
 
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
 }
