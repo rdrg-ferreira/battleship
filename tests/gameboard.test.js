@@ -42,7 +42,7 @@ describe("receiveAttack function", () => {
     test("function doesn't register hits made on a grid space that has already been shot", () => {
         const x = 3, y = 2;
         expect(g.receiveAttack(x, y)[1]).toBeTruthy();
-        expect(g.receiveAttack(x, y)).toBeFalsy();
+        expect(g.receiveAttack(x, y)[1]).toBeFalsy();
     });
 
     test("if a ship was it, the function sends a hit to the correct ship", () => {
