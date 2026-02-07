@@ -102,3 +102,37 @@ main > * {
 .square.shot {
     background-color: var(--square-shot-none-color);
 }
+
+#win-dialog {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 40px;
+    border-radius: 12px;
+}
+
+#win-dialog[open]::backdrop {
+    filter: brightness(0.9);
+}
+
+#close-win-dialog {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    border: none;
+    aspect-ratio: 1/1;
+}
+
+#close-win-dialog:focus-visible {
+    outline: none;
+}
+
+#close-win-dialog:hover {
+    filter: none;
+}
+
+#win-dialog > h1 {
+    position: relative;
+    z-index: 2;
+}

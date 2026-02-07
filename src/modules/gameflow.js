@@ -47,7 +47,25 @@ function handleShot(e, player) {
     square.classList.add("shot");
     square.classList.remove("unknown");
 
+    if (player.board.haveAllShipsSunk()) {
+        handleWin(...players.filter(p => p.name !== player.name));
+        return;
+    }
+
     changeCurrentPlayer();
+}
+
+function handleWin(player) {
+    const winDialog = document.querySelector("#win-dialog");
+    const closeButton = document.querySelector("#close-win-dialog");
+    const text = winDialog.querySelector("h1");
+
+    text.textContent = player.name + " has won the game";
+    closeButton.addEventListener("click", () => {
+        winDialog.close();
+        document.querySelector("#reset").click();
+    });
+    winDialog.showModal();
 }
 
 function toggleBoard(player) {
