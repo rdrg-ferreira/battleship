@@ -100,7 +100,7 @@ function toggleBoard(player) {
             e.target.classList.remove("dragover");
             const ship = new Ship(parseInt(dragged.dataset.length));
 
-            const success = player.board.placeShip(ship, parseInt(e.target.dataset.x), parseInt(e.target.dataset.y), "right");
+            const success = player.board.placeShip(ship, parseInt(e.target.dataset.x), parseInt(e.target.dataset.y), dragged.parentNode.dataset.orientation);
 
             if (success) {
                 document.querySelector("#ship-container").removeChild(dragged);

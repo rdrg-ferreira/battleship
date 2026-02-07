@@ -7,33 +7,36 @@
 </head>
 <body>
     <header><h1>Battleship</h1></header>
-    <div class="actions flex"><button id="reset">Reset</button></div>
+    <div class="actions flex">
+        <button id="reset">Reset</button>
+        <button id="axis">Axis: X</button>
+    </div>
     <main class="flex">
         <div class="field flex flex-column" id="Player-1-board">
             <span class="title">Player 1</span>
             <div class="board grid"></div>
-            <div id="ship-container" class="flex">
-                <div class="ship grid" draggable="true" data-length="2">
+            <div id="ship-container" class="flex" data-orientation="right">
+                <div class="ship flex" draggable="true" data-length="2">
                     <div class="square ship"></div>
                     <div class="square ship"></div>
                 </div>
-                <div class="ship grid" draggable="true" data-length="3">
-                    <div class="square ship"></div>
-                    <div class="square ship"></div>
-                    <div class="square ship"></div>
-                </div>
-                <div class="ship grid" draggable="true" data-length="3">
+                <div class="ship flex" draggable="true" data-length="3">
                     <div class="square ship"></div>
                     <div class="square ship"></div>
                     <div class="square ship"></div>
                 </div>
-                <div class="ship grid" draggable="true" data-length="4">
+                <div class="ship flex" draggable="true" data-length="3">
+                    <div class="square ship"></div>
+                    <div class="square ship"></div>
+                    <div class="square ship"></div>
+                </div>
+                <div class="ship flex" draggable="true" data-length="4">
                     <div class="square ship"></div>
                     <div class="square ship"></div>
                     <div class="square ship"></div>
                     <div class="square ship"></div>
                 </div>
-                <div class="ship grid" draggable="true" data-length="5">
+                <div class="ship flex" draggable="true" data-length="5">
                     <div class="square ship"></div>
                     <div class="square ship"></div>
                     <div class="square ship"></div>

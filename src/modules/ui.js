@@ -1,5 +1,7 @@
 import { Ship } from "./ship.js";
 
+const axisButton = document.querySelector("#axis")
+
 export function buildGameboards(p1, p2) {
     function buildGrid(player) {
         const board = document.querySelector(`#${player.name}-board > .board`);
@@ -58,3 +60,13 @@ export function renderBoardShips(player) {
             }
         }
 }
+
+axisButton.addEventListener("click", () => {
+    if (axisButton.textContent === "Axis: X") {
+        axisButton.textContent = "Axis: Y";
+        document.querySelector("#ship-container").dataset.orientation = "down";
+    } else if (axisButton.textContent === "Axis: Y") {
+        axisButton.textContent = "Axis: X";
+        document.querySelector("#ship-container").dataset.orientation = "right";
+    }
+});

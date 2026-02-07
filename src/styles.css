@@ -43,6 +43,7 @@ header {
 
 .actions {
     justify-content: center;
+    gap: 8px;
 }
 
 button {
@@ -145,9 +146,16 @@ main > * {
     margin-top: 8px;
 }
 
+#ship-container[data-orientation="down"] > .ship {
+    flex-direction: column;
+}
+
+#ship-container[data-orientation="right"] > .ship {
+    flex-direction: row;
+}
+
 #ship-container > .ship {
     gap: 4px;
-    grid-auto-flow: column;
 }
 
 #ship-container .square{
@@ -160,5 +168,5 @@ main > * {
 }
 
 .square.dragover {
-    filter: brightness(0.9);
+    filter: brightness(0.5);
 }
