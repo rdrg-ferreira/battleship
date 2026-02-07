@@ -24,7 +24,7 @@ export class Gameboard {
             if (xCopy >= 0 && xCopy <= 9 && yCopy >= 0 && yCopy <= 9 && !(this.grid[xCopy][yCopy] instanceof Ship)) {
                 this.grid[xCopy][yCopy] = ship;
             } else {
-                this.removeShip(ship.length, x, y, orientation);
+                this.removeShip(ship, x, y, orientation);
                 return false;
             }
 
@@ -38,9 +38,9 @@ export class Gameboard {
         return true;
     }
 
-    removeShip(length, x, y, orientation) {
-        for (let i = 0; i < length; i++) {
-            if (x >= 0 && y >= 0 && x <= 9 && y <= 9 && this.grid[x][y] !== 0) {
+    removeShip(ship, x, y, orientation) {
+        for (let i = 0; i < ship.length; i++) {
+            if (x >= 0 && y >= 0 && x <= 9 && y <= 9 && this.grid[x][y] instanceof Ship && this.grid[x][y] === ship) {
                 this.grid[x][y] = 0;
             }
 
