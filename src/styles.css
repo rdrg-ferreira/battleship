@@ -38,7 +38,7 @@ body {
 header {
     text-align: center;
     font-size: 1.5rem;
-    padding: 60px 0 30px;
+    padding: 40px 0 24px;
 }
 
 .actions {
@@ -56,7 +56,7 @@ button:hover {
 }
 
 main {
-    padding: 60px 160px 40px;
+    padding: 40px 160px;
     gap: 24px;
     flex-wrap: wrap;
 }
@@ -135,4 +135,30 @@ main > * {
 #win-dialog > h1 {
     position: relative;
     z-index: 2;
+}
+
+#ship-container {
+    gap: 20px;
+    flex-wrap: wrap;
+    max-width: 400px;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+#ship-container > .ship {
+    gap: 4px;
+    grid-auto-flow: column;
+}
+
+#ship-container .square{
+    width: 36.39px;
+    height: 36.39px;
+}
+
+.dragging {
+    opacity: 0;
+}
+
+.square.dragover {
+    filter: brightness(0.9);
 }

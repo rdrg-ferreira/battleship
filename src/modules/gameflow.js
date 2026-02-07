@@ -1,6 +1,6 @@
 import { Player } from "./player.js";
 import { Ship } from "./ship.js";
-import { buildGameboards } from "./ui.js";
+import { buildGameboards, initShips, renderBoardShips } from "./ui.js";
 
 let players, currentPlayer;
 function getCurrentPlayer() {return currentPlayer;}
@@ -12,7 +12,8 @@ function changeCurrentPlayer() {
 export function initGame() {
     players = createPlayers();
     currentPlayer = players[0];
-    placeTestShips(players[0], players[1]);
+    initShips();
+    placeTestShips(players[1]);
     buildGameboards(players[0], players[1]);
 
     toggleBoard(players[0], getCurrentPlayer, changeCurrentPlayer);
@@ -25,13 +26,14 @@ function createPlayers() {
     return [p1, p2];
 }
 
-function placeTestShips(p1, p2) {
-    for (let i = 0; i < 5; i++) {
-        const s1 = new Ship(i + 1);
-        p1.board.placeShip(s1, 0, i * 2, "down");
+function placeComputerShips() {
+    // TODO
+}
 
-        const s2 = new Ship(i + 1);
-        p2.board.placeShip(s2, 0, i * 2, "down");
+function placeTestShips(p) {
+    for (let i = 0; i < 5; i++) {
+        const s = new Ship(i + 1);
+        p.board.placeShip(s, 0, i * 2, "down");
     }
 }
 
@@ -72,6 +74,43 @@ function toggleBoard(player) {
     const board = document.querySelector(`#${player.name}-board > .board`);
 
     board.addEventListener("click", (e) => handleShot(e, player));
+
+    if (player.type === "robot") return;
+
+    board.addEventListener("dragover", (e) => e.preventDefault());
+
+    board.addEventListener("dragenter", (e) => {
+        if (e.target.classList.contains("square")) {
+            e.target.classList.add("dragover");
+        }
+    });
+
+    board.addEventListener("dragleave", (e) => {
+        if (e.target.classList.contains("square")) {
+            e.target.classList.remove("dragover");
+        }
+    });
+
+    board.addEventListener("drop", (e) => {
+        // prevent default action (open as link for some elements)
+        e.preventDefault();
+
+        if (e.target.classList.contains("square")) {
+            const dragged = document.querySelector("#ship-container > .ship.dragging");
+            e.target.classList.remove("dragover");
+            const ship = new Ship(parseInt(dragged.dataset.length));
+
+            const success = player.board.placeShip(ship, parseInt(e.target.dataset.x), parseInt(e.target.dataset.y), "right");
+
+            if (success) {
+                document.querySelector("#ship-container").removeChild(dragged);
+                e.target.appendChild(dragged);
+                renderBoardShips(player);
+            } else {
+                dragged.classList.remove("dragging");
+            }
+        }
+    });
 }
 
 function playComputerTurn(enemy) {

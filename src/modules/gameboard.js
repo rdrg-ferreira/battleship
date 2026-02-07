@@ -21,7 +21,7 @@ export class Gameboard {
     placeShip(ship, x, y, orientation) {
         let xCopy = x, yCopy = y;
         for (let i = 0; i < ship.length; i++) {
-            if (xCopy >= 0 && yCopy >= 0 && !(this.grid[xCopy][yCopy] instanceof Ship)) {
+            if (xCopy >= 0 && xCopy <= 9 && yCopy >= 0 && yCopy <= 9 && !(this.grid[xCopy][yCopy] instanceof Ship)) {
                 this.grid[xCopy][yCopy] = ship;
             } else {
                 this.removeShip(ship.length, x, y, orientation);
@@ -40,7 +40,7 @@ export class Gameboard {
 
     removeShip(length, x, y, orientation) {
         for (let i = 0; i < length; i++) {
-            if (x >= 0 && y >= 0 && this.grid[x][y] !== 0) {
+            if (x >= 0 && y >= 0 && x <= 9 && y <= 9 && this.grid[x][y] !== 0) {
                 this.grid[x][y] = 0;
             }
 
