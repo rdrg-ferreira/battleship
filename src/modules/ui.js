@@ -11,7 +11,6 @@ export function buildGameboards(p1, p2) {
                 const state = player.board.grid[i][j];
                 const square = document.createElement("div");
                 square.classList.add("square");
-
                 if (player.type === "robot") square.classList.add("unknown");
 
                 square.dataset.x = i;
