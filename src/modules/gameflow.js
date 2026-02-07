@@ -2,6 +2,7 @@ import { Player } from "./player.js";
 import { Ship } from "./ship.js";
 import { buildGameboards, initShips, renderBoardShips } from "./ui.js";
 
+let shipContainerTemp;
 let players, currentPlayer;
 function getCurrentPlayer() {return currentPlayer;}
 function changeCurrentPlayer() {
@@ -10,6 +11,7 @@ function changeCurrentPlayer() {
 }
 
 export function initGame() {
+    shipContainerTemp = document.querySelector("#ship-container").cloneNode(true);
     players = createPlayers();
     currentPlayer = players[0];
     initShips();
@@ -37,26 +39,6 @@ function placeTestShips(p) {
     }
 }
 
-function handleShot(e, player) {
-    if (getCurrentPlayer() === player || !e.target.classList.contains("square")) return;
-
-    const square = e.target;
-    const [previousState, success] = player.board.receiveAttack(square.dataset.x, square.dataset.y);
-
-    if (!success) return;
-
-    if (previousState instanceof Ship) square.classList.add("ship");
-    square.classList.add("shot");
-    square.classList.remove("unknown");
-
-    if (player.board.haveAllShipsSunk()) {
-        handleWin(...players.filter(p => p.name !== player.name));
-        return;
-    }
-
-    changeCurrentPlayer();
-}
-
 function handleWin(player) {
     const winDialog = document.querySelector("#win-dialog");
     const closeButton = document.querySelector("#close-win-dialog");
@@ -73,7 +55,25 @@ function handleWin(player) {
 function toggleBoard(player) {
     const board = document.querySelector(`#${player.name}-board > .board`);
 
-    board.addEventListener("click", (e) => handleShot(e, player));
+    board.addEventListener("click", (e) => {
+        if (getCurrentPlayer() === player || !e.target.classList.contains("square")) return;
+
+        const square = e.target;
+        const [previousState, success] = player.board.receiveAttack(square.dataset.x, square.dataset.y);
+
+        if (!success) return;
+
+        if (previousState instanceof Ship) square.classList.add("ship");
+        square.classList.add("shot");
+        square.classList.remove("unknown");
+
+        if (player.board.haveAllShipsSunk()) {
+            handleWin(...players.filter(p => p.name !== player.name));
+            return;
+        }
+
+        changeCurrentPlayer();
+    });
 
     if (player.type === "robot") return;
 
@@ -126,10 +126,18 @@ function getRandomInt(max) {
 
 document.querySelector("#reset").addEventListener("click", (e) => {
     e.stopPropagation();
+
     const boards = document.querySelectorAll(".board");
     boards.forEach(b => {
         const newB = b.cloneNode(false);
         b.parentNode.replaceChild(newB, b);
     });
+
+    const shipContainer = document.querySelector("#ship-container");
+    document.querySelector("#Player-1-board").replaceChild(shipContainerTemp, shipContainer);
+
+    const axisButton = document.querySelector("#axis");
+    if (axisButton.textContent === "Axis: Y") axisButton.click();
+
     initGame();
 });
