@@ -15,11 +15,10 @@ export function initGame() {
     players = createPlayers();
     currentPlayer = players[0];
     initShips();
-    placeTestShips(players[1]);
     buildGameboards(players[0], players[1]);
 
     initBoard();
-    placeComputerShips();
+    placeRobotShips();
 
     document.querySelector("#start").addEventListener("click", () => {
         toggleBoard(players[0]);
@@ -33,14 +32,16 @@ function createPlayers() {
     return [p1, p2];
 }
 
-function placeComputerShips() {
-    // TODO
-}
+function placeRobotShips() {
+    const player = players[1];
+    const shipLengths = [2, 3, 3, 4, 5], orientations = ["up", "down", "left", "right"];
 
-function placeTestShips(p) {
     for (let i = 0; i < 5; i++) {
-        const s = new Ship(i + 1);
-        p.board.placeShip(s, 0, i * 2, "down");
+        const s = new Ship(shipLengths[i]);
+        while(!player.board.ships.includes(s)) {
+            const x = getRandomInt(10), y = getRandomInt(10), orientation = orientations[getRandomInt(4)];
+            player.board.placeShip(s, x, y, orientation);
+        }
     }
 }
 
