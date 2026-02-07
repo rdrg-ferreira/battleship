@@ -18,8 +18,13 @@ export function initGame() {
     placeTestShips(players[1]);
     buildGameboards(players[0], players[1]);
 
-    toggleBoard(players[0], getCurrentPlayer, changeCurrentPlayer);
-    toggleBoard(players[1], getCurrentPlayer, changeCurrentPlayer);
+    initBoard();
+    placeComputerShips();
+
+    document.querySelector("#start").addEventListener("click", () => {
+        toggleBoard(players[0]);
+        toggleBoard(players[1]);
+    }, { once: true });
 }
 
 function createPlayers() {
@@ -74,8 +79,11 @@ function toggleBoard(player) {
 
         changeCurrentPlayer();
     });
+}
 
-    if (player.type === "robot") return;
+function initBoard() {
+    const board = document.querySelector("#Player-1-board > .board");
+    const player = players[0];
 
     board.addEventListener("dragover", (e) => e.preventDefault());
 
@@ -106,6 +114,7 @@ function toggleBoard(player) {
                 document.querySelector("#ship-container").removeChild(dragged);
                 e.target.appendChild(dragged);
                 renderBoardShips(player);
+                if (player.board.ships.length === 5) document.querySelector("#start").disabled = false;
             } else {
                 dragged.classList.remove("dragging");
             }
@@ -138,6 +147,8 @@ document.querySelector("#reset").addEventListener("click", (e) => {
 
     const axisButton = document.querySelector("#axis");
     if (axisButton.textContent === "Axis: Y") axisButton.click();
+
+    document.querySelector("#start").disabled = true;
 
     initGame();
 });
